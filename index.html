@@ -493,9 +493,15 @@
                                                         <!-- New Operational Charts -->
                                                         <canvas id="deploymentTimelineChart" 
                                                             data-type="matrix"
-                                                            data-orderful="9,5,1"
-                                                            data-industry="45,30,14">
-                                                        </canvas>
+                                                            data-segments="['Enterprise', 'SMB', 'Self-Service']"
+                                                            data-tiers="['Base', 'Enterprise', 'Growth', 'Scale']"
+                                                            data-values="[
+                                                                [95, 80, 70, 60],
+                                                                [85, 75, 65, 50],
+                                                                [75, 65, 55, 40]
+                                                            ]">
+                                                    </canvas>
+
                                                         <canvas id="supportMetricsChart" 
                                                             data-type="radar"
                                                             data-response="1"
