@@ -1351,11 +1351,6 @@ function createPartnerGrowthChart() {
                 colorFrom: (c) => colors.operational.primary + '80',
                 colorTo: (c) => colors.operational.secondary + '80',
                 colorMode: 'gradient',
-                /* Data matches marketCoverage totals:
-                   Retail/eComm: 3000
-                   Logistics: 2000
-                   Manufacturing: 1500
-                   Healthcare: 1000 */
             }]
         },
         options: {
@@ -1378,17 +1373,23 @@ function createPartnerGrowthChart() {
                 },
                 tooltip: {
                     callbacks: {
-                        title: (items) => {
+                        title(items) {
                             return `${items[0].raw.from} → ${items[0].raw.to}`;
                         },
-                        label: () => ''
-                        
+                        label() {
+                            return ''; // Optional customization for tooltips
+                        }
                     }
+                },
+                // CHANGED HERE:
+                datalabels: {
+                    display: false // Turn off data labels at the plugin level
                 }
             }
         }
     });
 }
+
 
 
 
