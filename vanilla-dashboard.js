@@ -1381,9 +1381,8 @@ function createPartnerGrowthChart() {
                         title: (items) => {
                             return `${items[0].raw.from} → ${items[0].raw.to}`;
                         },
-                        label: (item) => {
-                            return `Partners: ${item.raw.flow}`;
-                        }
+                        label: () => ''
+                        
                     }
                 }
             }
