@@ -1305,6 +1305,13 @@ function createMarketPenetrationChart() {
                         boxWidth: 12,
                         padding: 20
                     }
+                },
+                tooltip: {
+                    // Either:
+                    // 1) Disable tooltips entirely:
+                    enabled: false,
+                        
+                    }
                 }
             },
             animation: {
