@@ -1371,8 +1371,11 @@ function createPartnerGrowthChart() {
 
 function createTeamCompositionChart() {
     const ctx = document.getElementById('teamCompositionChart').getContext('2d');
-    const colors = getThemeColors(document.body.classList.contains('dark-theme'));
     
+    // Ensure getThemeColors returns an object with keys: 
+    //   operational.primary, text, grid, etc.
+    const colors = getThemeColors(document.body.classList.contains('dark-theme'));
+
     return new Chart(ctx, {
         type: 'line',
         data: {
@@ -1381,10 +1384,11 @@ function createTeamCompositionChart() {
                 label: 'Customer Journey',
                 data: [5000, 2000, 828, 276],
                 borderColor: colors.operational.primary,
+                // 40 at the end translates to roughly 25% opacity in hex (e.g., #RRGGBB40)
                 backgroundColor: colors.operational.primary + '40',
                 fill: true,
-                stepped: true,
-                tension: 0.4
+                stepped: true,          // Creates a stepped line
+                tension: 0.4            // Smooth line tension (ignored if stepped is true)
             }]
         },
         options: {
