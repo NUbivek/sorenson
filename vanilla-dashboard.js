@@ -675,10 +675,10 @@ function createROIChart() {
             scales: {
                 r: {
                     angleLines: {
-                        color: '#333333'
+                        color: 'ff5733'
                     },
                     grid: {
-                        color: '#333333'
+                        color: 'ff5733'
                     },
                     pointLabels: {
                         color: colors.text,
