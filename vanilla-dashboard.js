@@ -1064,41 +1064,35 @@ function createDeploymentTimelineChart() {
     const colors = getThemeColors(document.body.classList.contains('dark-theme'));
     
     return new Chart(ctx, {
-        type: 'matrix',
+        type: 'bar',
         data: {
-            datasets: [{
-                data: [
-                    // Retail/eComm adoption rates
-                    { x: 0, y: 0, v: 95 },
-                    { x: 1, y: 0, v: 80 },
-                    { x: 2, y: 0, v: 70 },
-                    { x: 3, y: 0, v: 60 },
-                    // Logistics adoption rates
-                    { x: 0, y: 1, v: 85 },
-                    { x: 1, y: 1, v: 75 },
-                    { x: 2, y: 1, v: 65 },
-                    { x: 3, y: 1, v: 50 },
-                    // Manufacturing adoption rates
-                    { x: 0, y: 2, v: 75 },
-                    { x: 1, y: 2, v: 65 },
-                    { x: 2, y: 2, v: 55 },
-                    { x: 3, y: 2, v: 40 },
-                    // Healthcare adoption rates
-                    { x: 0, y: 3, v: 65 },
-                    { x: 1, y: 3, v: 55 },
-                    { x: 2, y: 3, v: 45 },
-                    { x: 3, y: 3, v: 30 }
-                ],
-                backgroundColor(context) {
-                    const value = context.dataset.data[context.dataIndex].v;
-                    const alpha = value / 100;
-                    return colors.operational.primary + Math.round(alpha * 255).toString(16).padStart(2, '0');
+            labels: ['Enterprise', 'SMB', 'Self-Service'],
+            datasets: [
+                {
+                    label: 'Base',
+                    data: [95, 85, 75],
+                    backgroundColor: colors.operational.primary,
+                    borderRadius: 4
                 },
-                borderColor: colors.background,
-                borderWidth: 1,
-                width: ({ chart }) => (chart.chartArea || {}).width / 4 - 1,
-                height: ({ chart }) => (chart.chartArea || {}).height / 4 - 1
-            }]
+                {
+                    label: 'Enterprise',
+                    data: [80, 75, 65],
+                    backgroundColor: colors.operational.primary + 'CC',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Growth',
+                    data: [70, 65, 55],
+                    backgroundColor: colors.operational.primary + '99',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Scale',
+                    data: [60, 50, 40],
+                    backgroundColor: colors.operational.primary + '66',
+                    borderRadius: 4
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -1106,7 +1100,7 @@ function createDeploymentTimelineChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Feature Adoption Matrix',
+                    text: 'Feature Adoption by Segment',
                     align: 'start',
                     color: colors.text,
                     font: {
@@ -1116,48 +1110,53 @@ function createDeploymentTimelineChart() {
                     }
                 },
                 legend: {
-                    display: false
+                    position: 'right',
+                    align: 'start',
+                    labels: {
+                        color: colors.text,
+                        boxWidth: 12,
+                        padding: 20
+                    }
                 },
                 tooltip: {
                     callbacks: {
-                        title() {
-                            return '';
-                        },
-                        label(context) {
-                            const v = context.dataset.data[context.dataIndex];
-                            return [
-                                `${['Retail/eComm', 'Logistics', 'Manufacturing', 'Healthcare'][v.y]}: ${['Base', 'Enterprise', 'Growth', 'Scale'][v.x]}`,
-                                `Adoption: ${v.v}%`
-                            ];
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.raw}%`;
                         }
                     }
                 }
             },
             scales: {
                 x: {
-                    type: 'category',
-                    labels: ['Base', 'Enterprise', 'Growth', 'Scale'],
-                    ticks: {
-                        color: colors.text
-                    },
                     grid: {
                         display: false
+                    },
+                    ticks: {
+                        color: colors.text
                     }
                 },
                 y: {
-                    type: 'category',
-                    labels: ['Retail/eComm', 'Logistics', 'Manufacturing', 'Healthcare'],
-                    ticks: {
-                        color: colors.text
-                    },
+                    beginAtZero: true,
+                    max: 100,
                     grid: {
-                        display: false
+                        color: colors.grid + '20'
+                    },
+                    ticks: {
+                        color: colors.text,
+                        callback: function(value) {
+                            return value + '%';
+                        }
                     }
                 }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeInOutQuart'
             }
         }
     });
 }
+
 
 
 function createSupportMetricsChart() {
