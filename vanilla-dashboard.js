@@ -1063,34 +1063,41 @@ function createDeploymentTimelineChart() {
     const ctx = document.getElementById('deploymentTimelineChart').getContext('2d');
     const colors = getThemeColors(document.body.classList.contains('dark-theme'));
     
-    // Network data
-    const data = {
-        nodes: [
-            { id: 'hub', label: 'Orderful', size: 20 },
-            { id: 'retail', label: 'Retail/eComm', size: 15 },
-            { id: 'logistics', label: 'Logistics', size: 12 },
-            { id: 'manufacturing', label: 'Manufacturing', size: 10 },
-            { id: 'healthcare', label: 'Healthcare', size: 8 }
-        ],
-        edges: [
-            { from: 'hub', to: 'retail', value: 3000 },
-            { from: 'hub', to: 'logistics', value: 2000 },
-            { from: 'hub', to: 'manufacturing', value: 1500 },
-            { from: 'hub', to: 'healthcare', value: 1000 }
-        ]
-    };
-
     return new Chart(ctx, {
-        type: 'graph',
+        type: 'matrix',
         data: {
-            labels: data.nodes.map(n => n.label),
             datasets: [{
-                data: data.nodes,
-                edges: data.edges,
-                backgroundColor: colors.operational.primary,
-                borderColor: colors.operational.secondary,
-                borderWidth: 2,
-                hoverBorderWidth: 4
+                data: [
+                    // Retail/eComm adoption rates
+                    { x: 0, y: 0, v: 95 },
+                    { x: 1, y: 0, v: 80 },
+                    { x: 2, y: 0, v: 70 },
+                    { x: 3, y: 0, v: 60 },
+                    // Logistics adoption rates
+                    { x: 0, y: 1, v: 85 },
+                    { x: 1, y: 1, v: 75 },
+                    { x: 2, y: 1, v: 65 },
+                    { x: 3, y: 1, v: 50 },
+                    // Manufacturing adoption rates
+                    { x: 0, y: 2, v: 75 },
+                    { x: 1, y: 2, v: 65 },
+                    { x: 2, y: 2, v: 55 },
+                    { x: 3, y: 2, v: 40 },
+                    // Healthcare adoption rates
+                    { x: 0, y: 3, v: 65 },
+                    { x: 1, y: 3, v: 55 },
+                    { x: 2, y: 3, v: 45 },
+                    { x: 3, y: 3, v: 30 }
+                ],
+                backgroundColor(context) {
+                    const value = context.dataset.data[context.dataIndex].v;
+                    const alpha = value / 100;
+                    return colors.operational.primary + Math.round(alpha * 255).toString(16).padStart(2, '0');
+                },
+                borderColor: colors.background,
+                borderWidth: 1,
+                width: ({ chart }) => (chart.chartArea || {}).width / 4 - 1,
+                height: ({ chart }) => (chart.chartArea || {}).height / 4 - 1
             }]
         },
         options: {
@@ -1099,7 +1106,7 @@ function createDeploymentTimelineChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Network Effect',
+                    text: 'Feature Adoption Matrix',
                     align: 'start',
                     color: colors.text,
                     font: {
@@ -1110,25 +1117,48 @@ function createDeploymentTimelineChart() {
                 },
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        title() {
+                            return '';
+                        },
+                        label(context) {
+                            const v = context.dataset.data[context.dataIndex];
+                            return [
+                                `${['Retail/eComm', 'Logistics', 'Manufacturing', 'Healthcare'][v.y]}: ${['Base', 'Enterprise', 'Growth', 'Scale'][v.x]}`,
+                                `Adoption: ${v.v}%`
+                            ];
+                        }
+                    }
                 }
             },
-            layout: {
-                padding: 20
-            },
-            graph: {
-                springLength: 150,
-                springConstant: 0.2,
-                dragCoeff: 0.02,
-                gravity: -1.2,
-                repulsion: 10
-            },
-            animation: {
-                duration: 2000,
-                easing: 'easeInOutQuart'
+            scales: {
+                x: {
+                    type: 'category',
+                    labels: ['Base', 'Enterprise', 'Growth', 'Scale'],
+                    ticks: {
+                        color: colors.text
+                    },
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    type: 'category',
+                    labels: ['Retail/eComm', 'Logistics', 'Manufacturing', 'Healthcare'],
+                    ticks: {
+                        color: colors.text
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
             }
         }
     });
 }
+
 
 function createSupportMetricsChart() {
     const ctx = document.getElementById('supportMetricsChart').getContext('2d');
