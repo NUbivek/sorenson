@@ -1371,19 +1371,20 @@ function createPartnerGrowthChart() {
                 legend: {
                     display: false
                 },
+                // CHANGED: Modified tooltip to show flow value on hover
                 tooltip: {
                     callbacks: {
-                        title(items) {
+                        title: (items) => {
                             return `${items[0].raw.from} → ${items[0].raw.to}`;
                         },
-                        label() {
-                            return ''; // Optional customization for tooltips
+                        label: (item) => {
+                            return `Flow: ${item.raw.flow}`;
                         }
                     }
                 },
-                // CHANGED HERE:
+                // CHANGED: Disable permanent data labels
                 datalabels: {
-                    display: false // Turn off data labels at the plugin level
+                    display: false
                 }
             }
         }
