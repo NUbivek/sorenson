@@ -36,11 +36,6 @@ const operationalData = {
 
 // Register Chart.js plugin
 Chart.register(ChartDataLabels);
-Chart.register({
-    id: 'graph',
-    controller: window.Chart.GraphController,
-    element: window.Chart.EdgeLine
-});
 
 
 
