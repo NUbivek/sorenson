@@ -675,10 +675,10 @@ function createROIChart() {
             scales: {
                 r: {
                     angleLines: {
-                        color: 'ff5733'
+                        color: '#333333'
                     },
                     grid: {
-                        color: 'ff5733'
+                        color: '#333333'
                     },
                     pointLabels: {
                         color: colors.text,
@@ -1215,12 +1215,12 @@ function createSupportMetricsChart() {
                 r: {
                     // Adjust angle lines for better visibility
                     angleLines: {
-                        color: colors.grid + '90', // Change from '40' to '30'
+                        color: colors.grid + '30', // Change from '40' to '30'
                         lineWidth: 1
                     },
                     // Customize grid lines
                     grid: {
-                        color: colors.grid + '95', // Change from '20' to '15'
+                        color: colors.grid + '15', // Change from '20' to '15'
                         circular: true
                     },
                     // Improve point labels
@@ -1263,7 +1263,7 @@ function createSupportMetricsChart() {
 
 
 
-createMarketPenetrationChart() {
+function createMarketPenetrationChart() {
     const ctx = document.getElementById('marketPenetrationChart').getContext('2d');
     const colors = getThemeColors(document.body.classList.contains('dark-theme'));
     
