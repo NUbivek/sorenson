@@ -1263,7 +1263,7 @@ function createSupportMetricsChart() {
 
 
 
-function createMarketPenetrationChart() {
+createMarketPenetrationChart() {
     const ctx = document.getElementById('marketPenetrationChart').getContext('2d');
     const colors = getThemeColors(document.body.classList.contains('dark-theme'));
     
@@ -1304,13 +1304,6 @@ function createMarketPenetrationChart() {
                         color: colors.text,
                         boxWidth: 12,
                         padding: 20
-                    }
-                },
-                tooltip: {
-                    // Either:
-                    // 1) Disable tooltips entirely:
-                    enabled: false,
-                        
                     }
                 }
             },
