@@ -1171,7 +1171,7 @@ function createSupportMetricsChart() {
                 label: 'Support Metrics',
                 data: [99, 95, 98, 95],
                 // Change background opacity for better visibility
-                backgroundColor: colors.operational.primary + '20', // Change from '40' to '20'
+                backgroundColor: colors.operational.primary + '10', // Change from '40' to '20'
                 // Increase border width for more prominence
                 borderColor: colors.operational.primary,
                 borderWidth: 3, // Change from 2 to 3
@@ -1215,12 +1215,12 @@ function createSupportMetricsChart() {
                 r: {
                     // Adjust angle lines for better visibility
                     angleLines: {
-                        color: colors.grid + '30', // Change from '40' to '30'
+                        color: colors.grid + '90', // Change from '40' to '30'
                         lineWidth: 1
                     },
                     // Customize grid lines
                     grid: {
-                        color: colors.grid + '15', // Change from '20' to '15'
+                        color: colors.grid + '95', // Change from '20' to '15'
                         circular: true
                     },
                     // Improve point labels
